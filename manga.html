@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог манги - AniMangaHub</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .manga-reader-preview {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #334155;
+        }
+
+        .reader-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .reader-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .reader-page {
+            background-color: #0f172a;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+
+        .reader-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .chapter-list {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #334155;
+        }
+
+        .chapter-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #334155;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chapter-item:hover {
+            background-color: #0f172a;
+        }
+
+        .chapter-item:last-child {
+            border-bottom: none;
+        }
+
+        .chapter-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chapter-number {
+            color: var(--primary);
+            font-weight: bold;
+            min-width: 60px;
+        }
+
+        .chapter-title {
+            color: white;
+        }
+
+        .chapter-meta {
+            display: flex;
+            gap: 15px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .status-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-ongoing {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-completed {
+            background-color: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        .status-hiatus {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .volume-section {
+            margin-top: 30px;
+        }
+
+        .volume-title {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .manga-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: #1e293b;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+
+        .stat-card .value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-card .label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>AniMangaHub</span>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                    <a href="anime.html"><i class="fas fa-tv"></i> Аниме</a>
+                    <a href="manga.html" class="active"><i class="fas fa-book"></i> Манга</a>
+                    <a href="ranobe.html"><i class="fas fa-book-open"></i> Ранобэ</a>
+                    <a href="forum.html"><i class="fas fa-comments"></i> Форум</a>
+                    <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Календарь</a>
+                    <a href="collections.html"><i class="fas fa-heart"></i> Коллекции</a>
+                </nav>
+                
+                <div class="user-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск манги..." id="mangaSearch">
+                    </div>
+                    
+                    <a href="notifications.html" class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">2</span>
+                    </a>
+                    
+                    <a href="login.html" class="btn btn-outline">
+                        <i class="fas fa-user"></i> Войти
+                    </a>
+                    
+                    <a href="profile.html" class="avatar">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-filter"></i> Фильтры</h3>
+                    <div class="filter-group">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Жанры</label>
+                        <div class="filter-options" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="genre" value="shounen">
+                                <span>Сёнэн</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="genre" value="seinen">
+                                <span>Сэйнэн</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="genre" value="fantasy">
+                                <span>Фэнтези</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="genre" value="action">
+                                <span>Боевик</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="genre" value="romance">
+                                <span>Романтика</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="genre" value="comedy">
+                                <span>Комедия</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group" style="margin-top: 20px;">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Статус</label>
+                        <div class="filter-options" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="status" value="all" checked>
+                                <span>Все</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="status" value="ongoing">
+                                <span>Онгоинг</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="status" value="completed">
+                                <span>Завершена</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group" style="margin-top: 20px;">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Сортировка</label>
+                        <select class="filter-select" style="width: 100%; padding: 8px; border-radius: 6px; background-color: #0f172a; color: white; border: 1px solid #334155;">
+                            <option value="popular">По популярности</option>
+                            <option value="rating">По рейтингу</option>
+                            <option value="date">По дате обновления</option>
+                            <option value="chapters">По количеству глав</option>
+                            <option value="name">По названию</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="applyFilters()">
+                        <i class="fas fa-filter"></i> Применить фильтры
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-fire"></i> Топ недели</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="manga-detail.html">Ван Пис <span class="category-badge">9.8</span></a></li>
+                        <li><a href="manga-detail.html">Берсерк <span class="category-badge">9.7</span></a></li>
+                        <li><a href="manga-detail.html">Клинок, рассекающий демонов <span class="category-badge">9.6</span></a></li>
+                        <li><a href="manga-detail.html">Токийские мстители <span class="category-badge">9.4</span></a></li>
+                        <li><a href="manga-detail.html">Человек-бензопила <span class="category-badge">9.3</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-history"></i> Недавно обновлено</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="manga-detail.html">Магическая битва (Глава 224)</a></li>
+                        <li><a href="manga-detail.html">Моя геройская академия (Глава 387)</a></li>
+                        <li><a href="manga-detail.html">Токийский гуль (Глава 179)</a></li>
+                        <li><a href="manga-detail.html">Наруто (Глава 700)</a></li>
+                    </ul>
+                </div>
+            </aside>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-bg"></div>
+                    <div class="hero-content">
+                        <h1>Читайте мангу онлайн</h1>
+                        <p>Более 50,000 манги с переводом на русский язык. Читайте на сайте или в нашем приложении.</p>
+                        <div class="hero-buttons">
+                            <a href="#featured" class="btn btn-primary">
+                                <i class="fas fa-book-open"></i> Начать чтение
+                            </a>
+                            <a href="#new-chapters" class="btn btn-outline">
+                                <i class="fas fa-list"></i> Новые главы
+                            </a>
+                            <button class="btn btn-outline" onclick="showRandomManga()">
+                                <i class="fas fa-random"></i> Случайная манга
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Featured Manga -->
+                <section class="section" id="featured">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-star"></i> Рекомендуем к прочтению</h2>
+                        <a href="#" class="view-all">Все рекомендации <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="manga-stats">
+                        <div class="stat-card">
+                            <div class="value">52,847</div>
+                            <div class="label">Манги в каталоге</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value">1,245</div>
+                            <div class="label">Новых глав за неделю</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value">348</div>
+                            <div class="label">Активных переводчиков</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="value">24/7</div>
+                            <div class="label">Обновления</div>
+                        </div>
+                    </div>
+                    
+                    <div class="manga-grid">
+                        <!-- Manga Card 1 -->
+                        <div class="manga-card" onclick="https://remanga.org/manga/omniscient-reader/335947?page=1">
+                            <img src="всевед.webp" alt="Всеведущий Читатель" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Всеведущий Читатель</h3>
+                                <div class="card-meta">
+                                    <span>Глава 294</span>
+                                    <span>9.5 ★</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag">Фэнтези</span>
+                                    <span class="tag">Ужасы</span>
+                                    <span class="tag">Драма</span>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <span class="status-badge status-ongoing">Онгоинг</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Manga Card 2 -->
+                        <div class="manga-card"
+                        onclick="window.location.href='https://remanga.org/manga/vagabond/110428?page=1'">
+
+                            <img src="vagabond.webp" alt="Вагабонд" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Вагабонд</h3>
+                                <div class="card-meta">
+                                    <span>Глава 327</span>
+                                    <span>9.7 ★</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag">Исторический</span>
+                                    <span class="tag">Драма</span>
+                                    <span class="tag">Боевик</span>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <span class="status-badge status-hiatus">Хаиатус</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Manga Card 3 -->
+                        <div class="manga-card" onclick="https://remanga.org/manga/kingdom/76140?page=1">
+                            <img src="Королевство.png" alt="Королевство" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Королевство</h3>
+                                <div class="card-meta">
+                                    <span>Глава 756</span>
+                                    <span>9.6 ★</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag">Исторический</span>
+                                    <span class="tag">Боевик</span>
+                                    <span class="tag">Военный</span>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <span class="status-badge status-ongoing">Онгоинг</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Manga Card 4 -->
+                        <div class="manga-card" onclick="//webfandom.ru/reader/manga/manga-saga-o-vinlande-v9-c57_0?page=2">
+                            <img src="sagavinland.jpg" alt="Сага о Винланде" class="card-image">
+                            <div class="card-content">
+                                <h3 class="card-title">Сага о Винланде</h3>
+                                <div class="card-meta">
+                                    <span>Глава 203</span>
+                                    <span>9.5 ★</span>
+                                </div>
+                                <div class="card-tags">
+                                    <span class="tag">Исторический</span>
+                                    <span class="tag">Драма</span>
+                                    <span class="tag">Приключения</span>
+                                </div>
+                                <div style="margin-top: 10px;">
+                                    <span class="status-badge status-ongoing">Онгоинг</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                
+                
+                <!-- Manga Reader Preview -->
+                <section class="manga-reader-preview">
+    <iframe 
+        src="https://remanga.org"
+        style="width:100%; height:80vh; border:none; border-radius:12px;"
+        loading="lazy">
+    </iframe>
+</section>
+
+                
+                <!-- Popular Manga -->
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-chart-line"></i> Популярная манга</h2>
+                        <a href="#" class="view-all">Весь топ <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="manga-grid">
+                        <!-- Additional manga cards will be loaded here -->
+                    </div>
+                    
+                    <div class="pagination">
+                        <a href="#">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#">&raquo;</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AniMangaHub</h3>
+                    <p>Крупнейшая библиотека манги на русском языке. Читайте онлайн бесплатно.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul class="footer-links">
+                        <li><a href="anime.html">Аниме</a></li>
+                        <li><a href="manga.html">Манга</a></li>
+                        <li><a href="ranobe.html">Ранобэ</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                        <li><a href="calendar.html">Календарь</a></li>
+                        <li><a href="collections.html">Коллекции</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="dmca.html">DMCA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Для переводчиков</h3>
+                    <ul class="footer-links">
+                        <li><a href="translate-guide.html">Как переводить</a></li>
+                        <li><a href="translate-apply.html">Стать переводчиком</a></li>
+                        <li><a href="translate-rules.html">Правила перевода</a></li>
+                        <li><a href="donate.html">Поддержать проект</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 AniMangaHub. Все права защищены. Весь контент принадлежит их правообладателям.
+                <br>
+                <small style="color: #64748b;">Манга представлена исключительно в ознакомительных целях.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Manga page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize manga search
+            const searchInput = document.getElementById('mangaSearch');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchManga(this.value);
+                    }
+                });
+            }
+            
+            // Load popular manga
+            loadPopularManga();
+        });
+        
+        function searchManga(query) {
+            if (!query.trim()) return;
+            alert(`Поиск манги: ${query}`);
+            // In real implementation: redirect to search results
+        }
+        
+        function applyFilters() {
+            const selectedGenres = [];
+            document.querySelectorAll('input[name="genre"]:checked').forEach(cb => {
+                selectedGenres.push(cb.value);
+            });
+            
+            const status = document.querySelector('input[name="status"]:checked').value;
+            const sortBy = document.querySelector('.filter-select').value;
+            
+            alert(`Применены фильтры:\nЖанры: ${selectedGenres.join(', ') || 'Все'}\nСтатус: ${status}\nСортировка: ${sortBy}`);
+            
+            // In real implementation: reload manga grid with filters
+        }
+        
+        function showRandomManga() {
+            const mangas = ['Берсерк', 'Вагабонд', 'Ван Пис', 'Королевство', 'Сага о Винланде'];
+            const randomManga = mangas[Math.floor(Math.random() * mangas.length)];
+            alert(`Попробуйте прочитать: ${randomManga}`);
+        }
+        
+        function openMangaDetail(mangaId) {
+            window.location.href = `manga-detail.html?id=${mangaId}`;
+        }
+        
+        function readChapter(chapterId) {
+            alert(`Чтение главы: ${chapterId}\n(В реальном сайте откроется читалка)`);
+            // In real implementation: open manga reader
+        }
+        
+        function changeReaderMode() {
+            const readerPage = document.querySelector('.reader-page');
+            readerPage.style.backgroundColor = readerPage.style.backgroundColor === '#000000' ? '#0f172a' : '#000000';
+            alert('Режим чтения изменен');
+        }
+        
+        function changePageSize(mode) {
+            alert(`Режим отображения: ${mode}`);
+        }
+        
+        function prevPage() {
+            alert('Предыдущая страница');
+        }
+        
+        function nextPage() {
+            alert('Следующая страница');
+        }
+        
+        function loadPopularManga() {
+            // Simulate loading more manga
+            const mangaGrid = document.querySelector('.manga-grid:last-of-type');
+            if (mangaGrid) {
+                // Add more manga cards if needed
+            }
+        }
+    </script>
+    <script>
+    // Manga Page Specific Integration
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Загрузка манги
+        await loadMangaCatalog();
+        
+        // Инициализация поиска
+        const searchInput = document.getElementById('mangaSearch');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', async function(e) {
+                if (e.key === 'Enter') {
+                    await searchManga(this.value);
+                }
+            });
+        }
+        
+        // Инициализация фильтров
+        const filterButton = document.querySelector('button[onclick*="applyFilters"]');
+        if (filterButton) {
+            filterButton.onclick = async function() {
+                await applyMangaFilters();
+            };
+        }
+        
+        // Инициализация жанров для манги
+        await catalogManager.initFilters('manga');
+    });
+    
+    async function loadMangaCatalog() {
+        try {
+            const mangaList = await catalogManager.loadMangaCatalog();
+            catalogManager.renderCatalog(mangaList, 'mangaGrid', 'manga');
+        } catch (error) {
+            console.error('Failed to load manga catalog:', error);
+        }
+    }
+    
+    async function searchManga(query) {
+        if (!query.trim()) {
+            await loadMangaCatalog();
+            return;
+        }
+        
+        try {
+            const results = await catalogManager.searchCatalog(query, 'manga');
+            catalogManager.renderCatalog(results, 'mangaGrid', 'manga');
+        } catch (error) {
+            console.error('Search failed:', error);
+        }
+    }
+    
+    async function applyMangaFilters() {
+        const filters = {
+            genres: Array.from(document.querySelectorAll('input[name="genre"]:checked'))
+                .map(cb => cb.value),
+            status: document.querySelector('input[name="status"]:checked')?.value || 'all',
+            sortBy: document.querySelector('.filter-select').value
+        };
+        
+        try {
+            const filteredResults = await catalogManager.applyFilters(filters, 'manga');
+            catalogManager.renderCatalog(filteredResults, 'mangaGrid', 'manga');
+        } catch (error) {
+            console.error('Filter application failed:', error);
+        }
+    }
+</script>
+</body>
+</html>

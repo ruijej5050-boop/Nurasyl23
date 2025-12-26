@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог ранобэ - AniMangaHub</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .ranobe-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #334155;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .feature-card h4 {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .ranobe-reader {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid #334155;
+        }
+
+        .text-reader {
+            background-color: #0f172a;
+            border-radius: 8px;
+            padding: 30px;
+            min-height: 400px;
+            line-height: 1.8;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            border: 1px solid #334155;
+            margin-bottom: 20px;
+            overflow-y: auto;
+            max-height: 500px;
+        }
+
+        .text-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .text-settings {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .font-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #0f172a;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #334155;
+        }
+
+        .font-size-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 5px;
+        }
+
+        .font-size-value {
+            min-width: 30px;
+            text-align: center;
+            color: white;
+        }
+
+        .theme-toggle {
+            display: flex;
+            gap: 5px;
+            background-color: #0f172a;
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid #334155;
+        }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 5px 15px;
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .theme-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .volume-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .volume-card {
+            background-color: #1e293b;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .volume-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .volume-image {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .volume-info {
+            padding: 15px;
+        }
+
+        .volume-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .volume-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .volume-status {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-translated {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-translating {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+
+        .status-planned {
+            background-color: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        .author-section {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #334155;
+        }
+
+        .author-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .author-info h3 {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: #94a3b8;
+        }
+
+        .author-works {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .work-item {
+            background-color: #0f172a;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+        .work-item:hover {
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>AniMangaHub</span>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                    <a href="anime.html"><i class="fas fa-tv"></i> Аниме</a>
+                    <a href="manga.html"><i class="fas fa-book"></i> Манга</a>
+                    <a href="ranobe.html" class="active"><i class="fas fa-book-open"></i> Ранобэ</a>
+                    <a href="forum.html"><i class="fas fa-comments"></i> Форум</a>
+                    <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Календарь</a>
+                    <a href="collections.html"><i class="fas fa-heart"></i> Коллекции</a>
+                </nav>
+                
+                <div class="user-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск ранобэ..." id="ranobeSearch">
+                    </div>
+                    
+                    <a href="notifications.html" class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">1</span>
+                    </a>
+                    
+                    <a href="login.html" class="btn btn-outline">
+                        <i class="fas fa-user"></i> Войти
+                    </a>
+                    
+                    <a href="profile.html" class="avatar">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-filter"></i> Фильтры</h3>
+                    <div class="filter-group">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Категории</label>
+                        <div class="filter-options" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="category" value="isekai">
+                                <span>Исэкай</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="category" value="fantasy">
+                                <span>Фэнтези</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="category" value="romance">
+                                <span>Романтика</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="category" value="scifi">
+                                <span>Научная фантастика</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="category" value="drama">
+                                <span>Драма</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="checkbox" name="category" value="comedy">
+                                <span>Комедия</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group" style="margin-top: 20px;">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Статус перевода</label>
+                        <div class="filter-options" style="display: flex; flex-direction: column; gap: 8px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="translation" value="all" checked>
+                                <span>Все</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="translation" value="completed">
+                                <span>Переведено</span>
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                <input type="radio" name="translation" value="ongoing">
+                                <span>Переводится</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group" style="margin-top: 20px;">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Сортировка</label>
+                        <select class="filter-select" style="width: 100%; padding: 8px; border-radius: 6px; background-color: #0f172a; color: white; border: 1px solid #334155;">
+                            <option value="popular">По популярности</option>
+                            <option value="rating">По рейтингу</option>
+                            <option value="updates">По обновлениям</option>
+                            <option value="volumes">По количеству томов</option>
+                            <option value="alphabetical">По алфавиту</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="applyRanobeFilters()">
+                        <i class="fas fa-filter"></i> Применить фильтры
+                    </button>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-fire"></i> Топ ранобэ</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="ranobe-detail.html">Восхождение героя щита <span class="category-badge">9.7</span></a></li>
+                        <li><a href="ranobe-detail.html">Бездарный в магии <span class="category-badge">9.5</span></a></li>
+                        <li><a href="ranobe-detail.html">Время убийц <span class="category-badge">9.4</span></a></li>
+                        <li><a href="ranobe-detail.html">О моём перерождении в слизь <span class="category-badge">9.3</span></a></li>
+                        <li><a href="ranobe-detail.html">Overlord <span class="category-badge">9.2</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-user-edit"></i> Популярные авторы</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="author.html">Рэйфудзин Наоми</a></li>
+                        <li><a href="author.html">Кагами Такая</a></li>
+                        <li><a href="author.html">Кадокава Сёсэки</a></li>
+                        <li><a href="author.html">Мори Ямада</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-history"></i> Недавние обновления</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="ranobe-detail.html">Том 12: Восхождение героя щита</a></li>
+                        <li><a href="ranobe-detail.html">Том 8: Бездарный в магии</a></li>
+                        <li><a href="ranobe-detail.html">Том 15: Overlord</a></li>
+                    </ul>
+                </div>
+            </aside>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-bg"></div>
+                    <div class="hero-content">
+                        <h1>Читайте ранобэ онлайн</h1>
+                        <p>Более 10,000 ранобэ с официальными и фанатскими переводами. Погрузитесь в мир японской литературы.</p>
+                        <div class="hero-buttons">
+                            <a href="#popular" class="btn btn-primary">
+                                <i class="fas fa-book"></i> Популярные ранобэ
+                            </a>
+                            <a href="#new-translations" class="btn btn-outline">
+                                <i class="fas fa-language"></i> Новые переводы
+                            </a>
+                            <button class="btn btn-outline" onclick="showRandomRanobe()">
+                                <i class="fas fa-random"></i> Случайное ранобэ
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Features -->
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-star"></i> Особенности нашей библиотеки</h2>
+                    </div>
+                    
+                    <div class="ranobe-features">
+                        <div class="feature-card">
+                            <i class="fas fa-bookmark"></i>
+                            <h4>Закладки и прогресс</h4>
+                            <p>Сохраняйте место, где остановились, и продолжайте чтение с любого устройства</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <i class="fas fa-download"></i>
+                            <h4>Офлайн-чтение</h4>
+                            <p>Скачивайте тома для чтения без интернета</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <i class="fas fa-font"></i>
+                            <h4>Настройка текста</h4>
+                            <p>Изменяйте размер шрифта, тему и межстрочный интервал</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <i class="fas fa-comments"></i>
+                            <h4>Обсуждения</h4>
+                            <p>Комментируйте главы и общайтесь с другими читателями</p>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Popular Ranobe -->
+                                <section class="manga-reader-preview">
+    <iframe 
+        src="https://ranobelib.me/ru/catalog?seed=4d5c78c4f43f566aa3bb3364bedabb23"
+        style="width:100%; height:80vh; border:none; border-radius:12px;"
+        loading="lazy">
+    </iframe>
+</section>
+
+                
+                <!-- New Translations -->
+                <section class="section" id="new-translations">
+                    <div class="section-header">
+                        <h2 class="section-title"><i class="fas fa-language"></i> Новые переводы</h2>
+                        <a href="#" class="view-all">Все переводы <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    
+                    <div class="volume-list">
+                        <!-- Volume 1 -->
+                        <div class="volume-card" onclick="openRanobeVolume('tate-no-yuusha-22')">
+                            <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Том 22" class="volume-image">
+                            <div class="volume-info">
+                                <h4 class="volume-title">Восхождение героя щита. Том 22</h4>
+                                <div class="volume-meta">
+                                    <span>456 стр.</span>
+                                    <span>9.7 ★</span>
+                                </div>
+                                <span class="volume-status status-translated">Переведено</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Volume 2 -->
+                        <div class="volume-card" onclick="openRanobeVolume('mushoku-tensei-25')">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Том 25" class="volume-image">
+                            <div class="volume-info">
+                                <h4 class="volume-title">Бездарный в магии. Том 25</h4>
+                                <div class="volume-meta">
+                                    <span>420 стр.</span>
+                                    <span>9.5 ★</span>
+                                </div>
+                                <span class="volume-status status-translating">Переводится</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Volume 3 -->
+                        <div class="volume-card" onclick="openRanobeVolume('overlord-16')">
+                            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Том 16" class="volume-image">
+                            <div class="volume-info">
+                                <h4 class="volume-title">Overlord. Том 16</h4>
+                                <div class="volume-meta">
+                                    <span>380 стр.</span>
+                                    <span>9.2 ★</span>
+                                </div>
+                                <span class="volume-status status-translating">Переводится</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Volume 4 -->
+                        <div class="volume-card" onclick="openRanobeVolume('rezero-28')">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Том 28" class="volume-image">
+                            <div class="volume-info">
+                                <h4 class="volume-title">Re:Zero. Том 28</h4>
+                                <div class="volume-meta">
+                                    <span>412 стр.</span>
+                                    <span>9.5 ★</span>
+                                </div>
+                                <span class="volume-status status-translated">Переведено</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Author Spotlight -->
+                <section class="author-section">
+                    <div class="author-header">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h3>Рэйфудзин Наоми</h3>
+                            <p>Автор "Восхождения героя щита" и других популярных ранобэ</p>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #94a3b8; margin-bottom: 20px; line-height: 1.6;">
+                        Японский писатель, наиболее известный по серии ранобэ "Восхождение героя щита". 
+                        Его работы сочетают элементы исэкая, фэнтези и драмы, создавая захватывающие миры 
+                        с глубокими персонажами. Дебютировал в 2012 году и быстро завоевал популярность 
+                        среди читателей.
+                    </p>
+                    
+                    <div class="section-header" style="margin-bottom: 15px;">
+                        <h4 style="color: white;">Другие работы автора</h4>
+                    </div>
+                    
+                    <div class="author-works">
+                        <div class="work-item">
+                            <div style="color: white; font-weight: 500; margin-bottom: 5px;">Меч демона</div>
+                            <div style="color: #94a3b8; font-size: 0.9rem;">10 томов</div>
+                        </div>
+                        
+                        <div class="work-item">
+                            <div style="color: white; font-weight: 500; margin-bottom: 5px;">Хроники магистра</div>
+                            <div style="color: #94a3b8; font-size: 0.9rem;">7 томов</div>
+                        </div>
+                        
+                        <div class="work-item">
+                            <div style="color: white; font-weight: 500; margin-bottom: 5px;">Легенда о героях</div>
+                            <div style="color: #94a3b8; font-size: 0.9rem;">5 томов</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AniMangaHub</h3>
+                    <p>Крупнейшая библиотека ранобэ на русском языке. Читайте онлайн бесплатно.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul class="footer-links">
+                        <li><a href="anime.html">Аниме</a></li>
+                        <li><a href="manga.html">Манга</a></li>
+                        <li><a href="ranobe.html">Ранобэ</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                        <li><a href="calendar.html">Календарь</a></li>
+                        <li><a href="collections.html">Коллекции</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="dmca.html">DMCA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Для переводчиков</h3>
+                    <ul class="footer-links">
+                        <li><a href="translate-guide.html">Руководство по переводу</a></li>
+                        <li><a href="translate-apply.html">Стать переводчиком</a></li>
+                        <li><a href="translate-rules.html">Правила перевода</a></li>
+                        <li><a href="donate.html">Поддержать проект</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 AniMangaHub. Все права защищены. Весь контент принадлежит их правообладателям.
+                <br>
+                <small style="color: #64748b;">Ранобэ представлены исключительно в ознакомительных целях.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Ranobe page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize ranobe search
+            const searchInput = document.getElementById('ranobeSearch');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchRanobe(this.value);
+                    }
+                });
+            }
+            
+            // Set initial font size
+            updateFontSizeDisplay();
+        });
+        
+        function searchRanobe(query) {
+            if (!query.trim()) return;
+            alert(`Поиск ранобэ: ${query}`);
+            // In real implementation: redirect to search results
+        }
+        
+        function applyRanobeFilters() {
+            const selectedCategories = [];
+            document.querySelectorAll('input[name="category"]:checked').forEach(cb => {
+                selectedCategories.push(cb.value);
+            });
+            
+            const translation = document.querySelector('input[name="translation"]:checked').value;
+            const sortBy = document.querySelector('.filter-select').value;
+            
+            alert(`Применены фильтры:\nКатегории: ${selectedCategories.join(', ') || 'Все'}\nПеревод: ${translation}\nСортировка: ${sortBy}`);
+            
+            // In real implementation: reload ranobe grid with filters
+        }
+        
+        function showRandomRanobe() {
+            const ranobes = ['Восхождение героя щита', 'Overlord', 'Re:Zero', 'Бездарный в магии', 'Sword Art Online'];
+            const randomRanobe = ranobes[Math.floor(Math.random() * ranobes.length)];
+            alert(`Попробуйте прочитать: ${randomRanobe}`);
+        }
+        
+        function openRanobeDetail(ranobeId) {
+            window.location.href = `ranobe-detail.html?id=${ranobeId}`;
+        }
+        
+        function openRanobeVolume(volumeId) {
+            alert(`Открытие тома: ${volumeId}\n(В реальном сайте откроется читалка)`);
+            // In real implementation: open ranobe reader
+        }
+        
+        function changeFontSize(delta) {
+            const textReader = document.getElementById('textReader');
+            const fontSizeElement = document.getElementById('fontSize');
+            let currentSize = parseInt(fontSizeElement.textContent);
+            
+            currentSize += delta;
+            if (currentSize < 12) currentSize = 12;
+            if (currentSize > 24) currentSize = 24;
+            
+            textReader.style.fontSize = `${currentSize}px`;
+            fontSizeElement.textContent = currentSize;
+            
+            // Save preference
+            localStorage.setItem('ranobeFontSize', currentSize);
+        }
+        
+        function updateFontSizeDisplay() {
+            const savedSize = localStorage.getItem('ranobeFontSize');
+            if (savedSize) {
+                const textReader = document.getElementById('textReader');
+                const fontSizeElement = document.getElementById('fontSize');
+                textReader.style.fontSize = `${savedSize}px`;
+                fontSizeElement.textContent = savedSize;
+            }
+        }
+        
+        function changeTheme(theme) {
+            const textReader = document.getElementById('textReader');
+            const themeButtons = document.querySelectorAll('.theme-btn');
+            
+            // Update active button
+            themeButtons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Apply theme
+            if (theme === 'light') {
+                textReader.style.backgroundColor = '#ffffff';
+                textReader.style.color = '#000000';
+            } else if (theme === 'sepia') {
+                textReader.style.backgroundColor = '#f4ecd8';
+                textReader.style.color = '#5b4636';
+            } else {
+                textReader.style.backgroundColor = '#0f172a';
+                textReader.style.color = '#e2e8f0';
+            }
+            
+            // Save preference
+            localStorage.setItem('ranobeTheme', theme);
+        }
+        
+        function bookmarkPage() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) {
+                alert('Пожалуйста, войдите в систему, чтобы использовать закладки');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            alert('Страница добавлена в закладки');
+            // In real implementation: save bookmark to server
+        }
+    </script>
+    <script>
+    // Ranobe Page Specific Integration
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Загрузка ранобэ
+        await loadRanobeCatalog();
+        
+        // Инициализация поиска
+        const searchInput = document.getElementById('ranobeSearch');
+        if (searchInput) {
+            searchInput.addEventListener('keypress', async function(e) {
+                if (e.key === 'Enter') {
+                    await searchRanobe(this.value);
+                }
+            });
+        }
+        
+        // Инициализация фильтров
+        const filterButton = document.querySelector('button[onclick*="applyFilters"]');
+        if (filterButton) {
+            filterButton.onclick = async function() {
+                await applyRanobeFilters();
+            };
+        }
+        
+        // Инициализация жанров для ранобэ
+        await catalogManager.initFilters('ranobe');
+    });
+    
+    async function loadRanobeCatalog() {
+        try {
+            const ranobeList = await catalogManager.loadRanobeCatalog();
+            catalogManager.renderCatalog(ranobeList, 'ranobeGrid', 'ranobe');
+        } catch (error) {
+            console.error('Failed to load ranobe catalog:', error);
+        }
+    }
+    
+    async function searchRanobe(query) {
+        if (!query.trim()) {
+            await loadRanobeCatalog();
+            return;
+        }
+        
+        try {
+            const results = await catalogManager.searchCatalog(query, 'ranobe');
+            catalogManager.renderCatalog(results, 'ranobeGrid', 'ranobe');
+        } catch (error) {
+            console.error('Search failed:', error);
+        }
+    }
+    
+    async function applyRanobeFilters() {
+        const filters = {
+            genres: Array.from(document.querySelectorAll('input[name="category"]:checked'))
+                .map(cb => cb.value),
+            status: document.querySelector('input[name="translation"]:checked')?.value || 'all',
+            sortBy: document.querySelector('.filter-select').value
+        };
+        
+        try {
+            const filteredResults = await catalogManager.applyFilters(filters, 'ranobe');
+            catalogManager.renderCatalog(filteredResults, 'ranobeGrid', 'ranobe');
+        } catch (error) {
+            console.error('Filter application failed:', error);
+        }
+    }
+</script>
+</body>
+</html>

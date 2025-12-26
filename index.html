@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AniMangaHub - Главная</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/auth.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <!-- В header-content ДОБАВЬТЕ: -->
+<button class="hamburger-menu mobile-only">
+    <i class="fas fa-bars"></i>
+</button>
+
+                <a href="index.html" class="logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>AniMangaHub</span>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="index.html" class="active"><i class="fas fa-home"></i> Главная</a>
+                    <a href="anime.html"><i class="fas fa-tv"></i> Аниме</a>
+                    <a href="manga.html"><i class="fas fa-book"></i> Манга</a>
+                    <a href="ranobe.html"><i class="fas fa-book-open"></i> Ранобэ</a>
+                    <a href="forum.html"><i class="fas fa-comments"></i> Форум</a>
+                    <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Календарь</a>
+                    <a href="collections.html"><i class="fas fa-heart"></i> Коллекции</a>
+                </nav>
+                
+                <div class="user-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск аниме, манги...">
+                    </div>
+                    
+                    <a href="notifications.html" class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </a>
+                    
+                    <a href="login.html" class="btn btn-outline">
+                        <i class="fas fa-user"></i> Войти
+                    </a>
+                    
+                    <a href="profile.html" class="avatar">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+   <!-- Main Content -->
+    <div class="container">
+      <div class="main-content">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3><i class="fas fa-fire"></i> Популярное сегодня</h3>
+                <ul class="sidebar-links">
+                    <li>
+                        <a href="https://site.yummyani.me/catalog/item/moya-devushka-ne-prosto-milashka">
+                            Шикомори не просто милая 
+                            <span class="category-badge">Аниме</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://site.yummyani.me/catalog/item/ataka-titanov-zaklyuchitelnaya-glava-poslednyaya-ataka">
+                            Атака титанов: Финальный сезон 
+                            <span class="category-badge">Аниме</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://site.yummyani.me/catalog/item/chelovek-benzopila">
+                            Человек-бензопила 
+                            <span class="category-badge">Манга</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://site.yummyani.me/catalog/item/magicheskaya-bitva-2">
+                            Магическая битва 2 
+                            <span class="category-badge">Аниме</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://site.yummyani.me/catalog/item/voshozhdenie-geroya-shita">
+                            Восхождение героя щита 
+                            <span class="category-badge">Ранобэ</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-filter"></i> Жанры</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="anime.html?genre=adventure"><i class="fas fa-angle-right"></i> Приключения</a></li>
+                        <li><a href="anime.html?genre=romance"><i class="fas fa-angle-right"></i> Романтика</a></li>
+                        <li><a href="anime.html?genre=fantasy"><i class="fas fa-angle-right"></i> Фэнтези</a></li>
+                        <li><a href="anime.html?genre=action"><i class="fas fa-angle-right"></i> Боевик</a></li>
+                        <li><a href="anime.html?genre=comedy"><i class="fas fa-angle-right"></i> Комедия</a></li>
+                        <li><a href="anime.html?genre=drama"><i class="fas fa-angle-right"></i> Драма</a></li>
+                        <li><a href="anime.html?genre=shounen"><i class="fas fa-angle-right"></i> Сёнэн</a></li>
+                        <li><a href="anime.html?genre=slice-of-life"><i class="fas fa-angle-right"></i> Повседневность</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-users"></i> Онлайн</h3>
+                    <p><i class="fas fa-user" style="color: var(--success);"></i> 1,245 пользователей онлайн</p>
+                    <p><i class="fas fa-eye" style="color: var(--primary);"></i> 5,678 просмотров сегодня</p>
+                </div>
+            </aside>
+            
+            <!-- Content Area -->
+<div class="content-area">
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p>Новый серии уже на экранах! Смотрите эксклюзивно на AniManga.</p>
+            <div class="hero-buttons">
+                <a href="https://site.yummyani.me/catalog/top" class="btn btn-primary">
+                    <!-- Добавьте иконку, если нужно: <i class="fas fa-play"></i> -->
+                    Смотреть сейчас
+                </a>
+                <a href="https://remanga.org/manga" class="btn btn-outline">
+                    <!-- Добавьте иконку, если нужно: <i class="fas fa-book"></i> -->
+                    Читать мангу
+                </a>
+                <button class="btn btn-outline" onclick="addToCollection()">
+                    <!-- Добавьте иконку, если нужно: <i class="fas fa-plus"></i> -->
+                    В коллекцию
+                </button>
+            </div>
+        </div>
+    </section>
+</div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AniMangaHub</h3>
+                    <p>Лучшая платформа для просмотра аниме, чтения манги и ранобэ.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Разделы</h3>
+                    <ul class="footer-links">
+                        <li><a href="anime.html">Аниме</a></li>
+                        <li><a href="manga.html">Манга</a></li>
+                        <li><a href="ranobe.html">Ранобэ</a></li>
+                        <li><a href="forum.html">Форум</a></li>
+                        <li><a href="calendar.html">Календарь</a></li>
+                        <li><a href="collections.html">Коллекции</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="rules.html">Правила сайта</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="dmca.html">DMCA</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Партнёры</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Crunchyroll</a></li>
+                        <li><a href="#">Wakanim</a></li>
+                        <li><a href="#">AniLibria</a></li>
+                        <li><a href="#">Mangalib</a></li>
+                        <li><a href="#">RanobeHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+           <div class="mobile-overlay"></div>
+    <div class="mobile-nav">
+        <button class="mobile-nav-close">&times;</button>
+        <div class="mobile-nav-links">
+            <!-- ДОБАВЬТЕ ССЫЛКИ: -->
+            <a href="index.html" class="active"><i class="fas fa-home"></i> Главная</a>
+            <a href="anime.html"><i class="fas fa-tv"></i> Аниме</a>
+            <a href="manga.html"><i class="fas fa-book"></i> Манга</a>
+            <a href="ranobe.html"><i class="fas fa-book-open"></i> Ранобэ</a>
+            <a href="forum.html"><i class="fas fa-comments"></i> Форум</a>
+            <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Календарь</a>
+            <a href="collections.html"><i class="fas fa-heart"></i> Коллекции</a>
+        </div>
+    </div>
+            
+            <div class="copyright">
+                &copy; 2023 AniMangaHub. Все права защищены. Весь контент принадлежит их правообладателям.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+document.querySelectorAll('.manga-card').forEach(card => {
+    card.addEventListener('touchstart', () => {
+        card.style.transform = 'scale(0.97)';
+    });
+
+    card.addEventListener('touchend', () => {
+        card.style.transform = 'scale(1)';
+    });
+});
+        // Простой JavaScript для мобильной навигации
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.querySelector('.hamburger-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
+            const closeBtn = document.querySelector('.mobile-nav-close');
+            const overlay = document.querySelector('.mobile-overlay');
+            
+            if (hamburger && mobileNav) {
+                hamburger.addEventListener('click', function() {
+                    mobileNav.classList.add('active');
+                    overlay.classList.add('active');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+                
+                overlay.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                    overlay.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

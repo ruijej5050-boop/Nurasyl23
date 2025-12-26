@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль - AniMangaHub</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #334155;
+        }
+
+        .profile-avatar-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            flex-shrink: 0;
+            border: 5px solid #1e293b;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .profile-name h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        .profile-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .profile-status {
+            color: #94a3b8;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .profile-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-stat {
+            background-color: #0f172a;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #334155;
+            transition: all 0.3s;
+        }
+
+        .profile-stat:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 5px;
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 5px;
+            border: 1px solid #334155;
+            flex-wrap: wrap;
+        }
+
+        .profile-tab {
+            flex: 1;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .profile-tab:hover {
+            color: white;
+            background-color: #0f172a;
+        }
+
+        .profile-tab.active {
+            color: white;
+            background-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .achievement-card {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .achievement-card.locked {
+            opacity: 0.6;
+            filter: grayscale(1);
+        }
+
+        .achievement-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 15px;
+            border: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .achievement-card.locked .achievement-icon {
+            border-color: #64748b;
+            color: #64748b;
+        }
+
+        .achievement-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .achievement-progress {
+            width: 100%;
+            height: 6px;
+            background-color: #0f172a;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+        }
+
+        .achievement-count {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            align-self: flex-start;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background-color: #1e293b;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            transition: all 0.3s;
+        }
+
+        .activity-item:hover {
+            border-color: var(--primary);
+        }
+
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            color: white;
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .activity-time {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .activity-meta {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .friends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .friend-card {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid #334155;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .friend-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .friend-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 15px;
+        }
+
+        .friend-name {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .friend-status {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .friend-stats {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        .settings-form {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid #334155;
+        }
+
+        .settings-section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .settings-section h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .settings-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #334155;
+        }
+
+        .settings-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            color: white;
+            font-weight: 500;
+        }
+
+        .setting-description {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #64748b;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .avatar-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .avatar-option {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .avatar-option:hover {
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .avatar-option.selected {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+        }
+
+        .edit-profile-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .profile-level {
+            margin-top: 20px;
+        }
+
+        .level-bar {
+            height: 10px;
+            background-color: #0f172a;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .level-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 5px;
+        }
+
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .level-current {
+            color: var(--primary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>AniMangaHub</span>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                    <a href="anime.html"><i class="fas fa-tv"></i> Аниме</a>
+                    <a href="manga.html"><i class="fas fa-book"></i> Манга</a>
+                    <a href="ranobe.html"><i class="fas fa-book-open"></i> Ранобэ</a>
+                    <a href="forum.html"><i class="fas fa-comments"></i> Форум</a>
+                    <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Календарь</a>
+                    <a href="collections.html"><i class="fas fa-heart"></i> Коллекции</a>
+                </nav>
+                
+                <div class="user-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск..." id="profileSearch">
+                    </div>
+                    
+                    <a href="notifications.html" class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </a>
+                    
+                    <a href="login.html" class="btn btn-outline">
+                        <i class="fas fa-user"></i> Войти
+                    </a>
+                    
+                    <a href="profile.html" class="avatar">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-user-circle"></i> Мой профиль</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#" class="active"><i class="fas fa-user"></i> Обзор</a></li>
+                        <li><a href="#" onclick="switchTab('stats')"><i class="fas fa-chart-bar"></i> Статистика</a></li>
+                        <li><a href="#" onclick="switchTab('collections')"><i class="fas fa-heart"></i> Мои коллекции</a></li>
+                        <li><a href="#" onclick="switchTab('achievements')"><i class="fas fa-trophy"></i> Достижения</a></li>
+                        <li><a href="#" onclick="switchTab('activity')"><i class="fas fa-history"></i> Активность</a></li>
+                        <li><a href="#" onclick="switchTab('friends')"><i class="fas fa-users"></i> Друзья</a></li>
+                        <li><a href="#" onclick="switchTab('settings')"><i class="fas fa-cog"></i> Настройки</a></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-calendar-check"></i> Сегодня</h3>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">
+                        <p><i class="fas fa-tv" style="color: var(--primary);"></i> 2 новых эпизода</p>
+                        <p><i class="fas fa-book" style="color: var(--success);"></i> 5 новых глав</p>
+                        <p><i class="fas fa-comment" style="color: var(--warning);"></i> 3 ответа в темах</p>
+                        <p><i class="fas fa-bell" style="color: var(--danger);"></i> 1 событие</p>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-award"></i> Уровень</h3>
+                    <div class="profile-level">
+                        <div class="level-bar">
+                            <div class="level-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="level-info">
+                            <span class="level-current">Уровень 12</span>
+                            <span>65% до 13 уровня</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-crown"></i> Рейтинг</h3>
+                    <ul class="sidebar-links">
+                        <li><a href="#"><i class="fas fa-chess-king"></i> #45 в общем рейтинге</a></li>
+                        <li><a href="#"><i class="fas fa-chess-queen"></i> #12 среди коллекционеров</a></li>
+                        <li><a href="#"><i class="fas fa-chess-knight"></i> #28 на форуме</a></li>
+                    </ul>
+                </div>
+            </aside>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="profile-container">
+                    <!-- Profile Header -->
+                    <section class="profile-header">
+                        <div class="profile-avatar-large" id="profileAvatar">
+                            A
+                        </div>
+                        
+                        <div class="profile-info">
+                            <div class="profile-name">
+                                <h1>AnimeFan2023</h1>
+                                <span class="profile-badge">
+                                    <i class="fas fa-crown"></i> Премиум
+                                </span>
+                                <span class="profile-badge" style="background-color: var(--success);">
+                                    <i class="fas fa-check-circle"></i> Подтверждён
+                                </span>
+                            </div>
+                            
+                            <p class="profile-status">
+                                <i class="fas fa-quote-left" style="color: var(--primary); margin-right: 5px;"></i>
+                                Любитель аниме с 2018 года. Особенно нравятся сёнэн и психологические триллеры.
+                            </p>
+                            
+                            <div class="profile-actions">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-edit"></i> Редактировать профиль
+                                </button>
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-share-alt"></i> Поделиться
+                                </button>
+                                <button class="btn btn-outline">
+                                    <i class="fas fa-qrcode"></i> QR-код профиля
+                                </button>
+                            </div>
+                            
+                            <div class="profile-stats-grid">
+                                <div class="profile-stat">
+                                    <div class="stat-value">247</div>
+                                    <div class="stat-label">Просмотрено аниме</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">1,245</div>
+                                    <div class="stat-label">Прочитано глав</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">42</div>
+                                    <div class="stat-label">Коллекций</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">568</div>
+                                    <div class="stat-label">Постов на форуме</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="edit-profile-btn">
+                            <button class="btn btn-outline" onclick="editProfile()">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                        </div>
+                    </section>
+                    
+                    <!-- Profile Tabs -->
+                    <div class="profile-tabs">
+                        <button class="profile-tab active" onclick="switchTab('overview')">Обзор</button>
+                        <button class="profile-tab" onclick="switchTab('stats')">Статистика</button>
+                        <button class="profile-tab" onclick="switchTab('collections')">Коллекции</button>
+                        <button class="profile-tab" onclick="switchTab('achievements')">Достижения</button>
+                        <button class="profile-tab" onclick="switchTab('activity')">Активность</button>
+                        <button class="profile-tab" onclick="switchTab('friends')">Друзья</button>
+                        <button class="profile-tab" onclick="switchTab('settings')">Настройки</button>
+                    </div>
+                    
+                    <!-- Tab Contents -->
+                    <!-- Overview Tab -->
+                    <div class="tab-content active" id="overviewTab">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-star"></i> Недавняя активность</h2>
+                            </div>
+                            
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-tv"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            Вы начали смотреть <strong>Магическая битва 2</strong> - Эпизод 12
+                                        </div>
+                                        <div class="activity-time">2 часа назад</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            Вы прочитали <strong>Берсерк</strong> - Глава 374
+                                        </div>
+                                        <div class="activity-time">5 часов назад</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            Вы оставили комментарий в теме <strong>"Обсуждение Атаки титанов"</strong>
+                                        </div>
+                                        <div class="activity-time">Вчера, 14:30</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-icon">
+                                        <i class="fas fa-heart"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">
+                                            Вы добавили <strong>Человека-бензопилу</strong> в коллекцию "Лучшее"
+                                        </div>
+                                        <div class="activity-time">2 дня назад</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                            <!-- Currently Watching -->
+                            
+                    <!-- Statistics Tab -->
+                    <div class="tab-content" id="statsTab">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-chart-bar"></i> Подробная статистика</h2>
+                            </div>
+                            
+                            <div class="profile-stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                                <div class="profile-stat">
+                                    <div class="stat-value">45</div>
+                                    <div class="stat-label">Дней активности</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">128</div>
+                                    <div class="stat-label">Часов просмотра</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">5.2</div>
+                                    <div class="stat-label">Средний рейтинг</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">78%</div>
+                                    <div class="stat-label">Завершённых</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">15</div>
+                                    <div class="stat-label">Брошено</div>
+                                </div>
+                                <div class="profile-stat">
+                                    <div class="stat-value">42</div>
+                                    <div class="stat-label">В планах</div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                                <div>
+                                    <h3 style="color: white; margin-bottom: 15px;">По жанрам</h3>
+                                    <div style="background-color: #0f172a; border-radius: 8px; padding: 20px; border: 1px solid #334155;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span style="color: white;">Сёнэн</span>
+                                            <span style="color: var(--primary);">42%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span style="color: white;">Фэнтези</span>
+                                            <span style="color: var(--primary);">28%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span style="color: white;">Драма</span>
+                                            <span style="color: var(--primary);">15%</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: white;">Комедия</span>
+                                            <span style="color: var(--primary);">10%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h3 style="color: white; margin-bottom: 15px;">По годам</h3>
+                                    <div style="background-color: #0f172a; border-radius: 8px; padding: 20px; border: 1px solid #334155;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span style="color: white;">2023</span>
+                                            <span style="color: var(--primary);">45</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span style="color: white;">2022</span>
+                                            <span style="color: var(--primary);">68</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                            <span style="color: white;">2021</span>
+                                            <span style="color: var(--primary);">52</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span style="color: white;">2020 и ранее</span>
+                                            <span style="color: var(--primary);">82</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <!-- Collections Tab -->
+                    <div class="tab-content" id="collectionsTab">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-heart"></i> Мои коллекции</h2>
+                                <button class="btn btn-primary" onclick="openCreateModal()">
+                                    <i class="fas fa-plus"></i> Новая коллекция
+                                </button>
+                            </div>
+                            
+                            <div class="collections-grid">
+                                <!-- User's collections will be loaded here -->
+                                <div class="empty-collection">
+                                    <i class="fas fa-layer-group"></i>
+                                    <h3>Коллекций пока нет</h3>
+                                    <p>Создайте свою первую коллекцию и добавляйте в неё любимые аниме, мангу или ранобэ</p>
+                                    <button class="btn btn-primary" style="margin-top: 20px;" onclick="openCreateModal()">
+                                        Создать коллекцию
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <!-- Achievements Tab -->
+                    <div class="tab-content" id="achievementsTab">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-trophy"></i> Достижения</h2>
+                                <div style="color: #94a3b8;">
+                                    <span style="color: var(--primary); font-weight: 500;">15</span> из <span>45</span> достижений
+                                </div>
+                            </div>
+                            
+                            <div class="achievements-grid">
+                                <!-- Achievement 1 -->
+                                <div class="achievement-card">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-play-circle"></i>
+                                    </div>
+                                    <h4 class="achievement-title">Первый просмотр</h4>
+                                    <p class="achievement-desc">Посмотреть первое аниме</p>
+                                    <div class="achievement-count">Получено: 12.03.2023</div>
+                                </div>
+                                
+                                <!-- Achievement 2 -->
+                                <div class="achievement-card">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-film"></i>
+                                    </div>
+                                    <h4 class="achievement-title">Киноман</h4>
+                                    <p class="achievement-desc">Посмотреть 50 аниме</p>
+                                    <div class="achievement-progress">
+                                        <div class="progress-fill" style="width: 85%;"></div>
+                                    </div>
+                                    <div class="achievement-count">42/50</div>
+                                </div>
+                                
+                                <!-- Achievement 3 -->
+                                <div class="achievement-card">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-book"></i>
+                                    </div>
+                                    <h4 class="achievement-title">Читатель</h4>
+                                    <p class="achievement-desc">Прочитать 100 глав манги</p>
+                                    <div class="achievement-progress">
+                                        <div class="progress-fill" style="width: 100%;"></div>
+                                    </div>
+                                    <div class="achievement-count">245/100</div>
+                                </div>
+                                
+                                <!-- Achievement 4 -->
+                                <div class="achievement-card">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-comment"></i>
+                                    </div>
+                                    <h4 class="achievement-title">Общительный</h4>
+                                    <p class="achievement-desc">Оставить 50 комментариев</p>
+                                    <div class="achievement-progress">
+                                        <div class="progress-fill" style="width: 100%;"></div>
+                                    </div>
+                                    <div class="achievement-count">568/50</div>
+                                </div>
+                                
+                                <!-- Achievement 5 (Locked) -->
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-crown"></i>
+                                    </div>
+                                    <h4 class="achievement-title">Легенда</h4>
+                                    <p class="achievement-desc">Достичь 30 уровня</p>
+                                    <div class="achievement-progress">
+                                        <div class="progress-fill" style="width: 40%;"></div>
+                                    </div>
+                                    <div class="achievement-count">12/30</div>
+                                </div>
+                                
+                                <!-- Achievement 6 (Locked) -->
+                                <div class="achievement-card locked">
+                                    <div class="achievement-icon">
+                                        <i class="fas fa-layer-group"></i>
+                                    </div>
+                                    <h4 class="achievement-title">Коллекционер</h4>
+                                    <p class="achievement-desc">Создать 20 коллекций</p>
+                                    <div class="achievement-progress">
+                                        <div class="progress-fill" style="width: 60%;"></div>
+                                    </div>
+                                    <div class="achievement-count">12/20</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <!-- Activity Tab -->
+                    <div class="tab-content" id="activityTab">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-history"></i> Вся активность</h2>
+                                <select class="filter-select" onchange="filterActivity(this.value)">
+                                    <option value="all">Вся активность</option>
+                                    <option value="anime">Просмотры</option>
+                                    <option value="manga">Чтение</option>
+                                    <option value="forum">Форум</option>
+                                    <option value="collections">Коллекции</option>
+                                </select>
+                            </div>
+                            
+                            <div class="activity-list" id="activityList">
+                                <!-- Activity items will be loaded dynamically -->
+                            </div>
+                            
+                            <div class="pagination">
+                                <a href="#">&laquo;</a>
+                                <a href="#" class="active">1</a>
+                                <a href="#">2</a>
+                                <a href="#">3</a>
+                                <a href="#">4</a>
+                                <a href="#">5</a>
+                                <a href="#">&raquo;</a>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <!-- Friends Tab -->
+                    <div class="tab-content" id="friendsTab">
+                        <section class="section">
+                            <div class="section-header">
+                                <h2 class="section-title"><i class="fas fa-users"></i> Друзья</h2>
+                                <div style="display: flex; gap: 15px;">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-user-plus"></i> Добавить друга
+                                    </button>
+                                    <button class="btn btn-outline">
+                                        <i class="fas fa-search"></i> Найти друзей
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="friends-grid">
+                                <!-- Friend 1 -->
+                                <div class="friend-card">
+                                    <div class="friend-avatar">
+                                        O
+                                    </div>
+                                    <h4 class="friend-name">OtakuKing</h4>
+                                    <p class="friend-status">Уровень 15</p>
+                                    <div class="friend-stats">
+                                        <div>245 аниме</div>
+                                        <div>42 коллекции</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Friend 2 -->
+                                <div class="friend-card">
+                                    <div class="friend-avatar">
+                                        M
+                                    </div>
+                                    <h4 class="friend-name">MangaReader</h4>
+                                    <p class="friend-status">Уровень 18</p>
+                                    <div class="friend-stats">
+                                        <div>1,568 глав</div>
+                                        <div>28 коллекций</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Friend 3 -->
+                                <div class="friend-card">
+                                    <div class="friend-avatar">
+                                        S
+                                    </div>
+                                    <h4 class="friend-name">Shinobi</h4>
+                                    <p class="friend-status">Уровень 10</p>
+                                    <div class="friend-stats">
+                                        <div>128 аниме</div>
+                                        <div>15 коллекций</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Add Friend Card -->
+                                <div class="new-collection-card" style="min-height: auto; padding: 30px 20px;" onclick="addFriend()">
+                                    <div class="new-collection-icon" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-user-plus"></i>
+                                    </div>
+                                    <div class="new-collection-text">Добавить друга</div>
+                                    <div class="new-collection-subtext">Найдите друзей по интересам</div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <!-- Settings Tab -->
+                    <div class="tab-content" id="settingsTab">
+                        <form class="settings-form" id="settingsForm">
+                            <div class="settings-section">
+                                <h3>Основные настройки</h3>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Имя пользователя</div>
+                                        <div class="setting-description">Отображается в вашем профиле</div>
+                                    </div>
+                                    <input type="text" value="AnimeFan2023" style="background-color: #0f172a; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 6px; width: 200px;">
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Электронная почта</div>
+                                        <div class="setting-description">Используется для входа и уведомлений</div>
+                                    </div>
+                                    <input type="email" value="user@example.com" style="background-color: #0f172a; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 6px; width: 200px;">
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Статус</div>
+                                        <div class="setting-description">Короткое описание в вашем профиле</div>
+                                    </div>
+                                    <input type="text" value="Любитель аниме с 2018 года" style="background-color: #0f172a; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 6px; width: 250px;">
+                                </div>
+                            </div>
+                            
+                            <div class="settings-section">
+                                <h3>Внешний вид</h3>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Аватар</div>
+                                        <div class="setting-description">Выберите изображение для профиля</div>
+                                    </div>
+                                    <div class="avatar-options">
+                                        <div class="avatar-option selected" onclick="selectAvatar('A')">A</div>
+                                        <div class="avatar-option" onclick="selectAvatar('B')">B</div>
+                                        <div class="avatar-option" onclick="selectAvatar('C')">C</div>
+                                        <div class="avatar-option" onclick="selectAvatar('D')">D</div>
+                                        <div class="avatar-option" onclick="selectAvatar('E')">E</div>
+                                        <div class="avatar-option" onclick="selectAvatar('F')">F</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Тема оформления</div>
+                                        <div class="setting-description">Тёмная или светлая тема</div>
+                                    </div>
+                                    <select style="background-color: #0f172a; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 6px;">
+                                        <option>Тёмная</option>
+                                        <option>Светлая</option>
+                                        <option>Авто</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-section">
+                                <h3>Уведомления</h3>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Новые эпизоды</div>
+                                        <div class="setting-description">Уведомлять о выходе новых эпизодов</div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Ответы на форуме</div>
+                                        <div class="setting-description">Уведомлять об ответах в ваших темах</div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Новости сайта</div>
+                                        <div class="setting-description">Уведомлять о новостях и обновлениях</div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-section">
+                                <h3>Конфиденциальность</h3>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Профиль</div>
+                                        <div class="setting-description">Кто может видеть ваш профиль</div>
+                                    </div>
+                                    <select style="background-color: #0f172a; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 6px;">
+                                        <option>Все</option>
+                                        <option>Только друзья</option>
+                                        <option>Только я</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Коллекции</div>
+                                        <div class="setting-description">Кто может видеть ваши коллекции</div>
+                                    </div>
+                                    <select style="background-color: #0f172a; border: 1px solid #334155; color: white; padding: 8px 12px; border-radius: 6px;">
+                                        <option>Все</option>
+                                        <option>Только друзья</option>
+                                        <option>Только я</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="settings-row">
+                                    <div>
+                                        <div class="setting-label">Активность</div>
+                                        <div class="setting-description">Показывать вашу активность другим</div>
+                                    </div>
+                                    <label class="switch">
+                                        <input type="checkbox" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: right; margin-top: 30px;">
+                                <button type="button" class="btn btn-outline" onclick="resetSettings()">Сбросить</button>
+                                <button type="button" class="btn btn-primary" onclick="saveSettings()">Сохранить изменения</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AniMangaHub</h3>
+                    <p>Ваш личный кабинет для отслеживания аниме, манги и ранобэ.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Профиль</h3>
+                    <ul class="footer-links">
+                        <li><a href="profile-stats.html">Статистика</a></li>
+                        <li><a href="profile-collections.html">Коллекции</a></li>
+                        <li><a href="profile-achievements.html">Достижения</a></li>
+                        <li><a href="profile-friends.html">Друзья</a></li>
+                        <li><a href="profile-settings.html">Настройки</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Аккаунт</h3>
+                    <ul class="footer-links">
+                        <li><a href="account-upgrade.html">Премиум</a></li>
+                        <li><a href="account-security.html">Безопасность</a></li>
+                        <li><a href="account-privacy.html">Конфиденциальность</a></li>
+                        <li><a href="account-delete.html">Удаление аккаунта</a></li>
+                        <li><a href="#" onclick="logout()">Выйти</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="support.html">Поддержка</a></li>
+                        <li><a href="contact.html">Контакты</a></li>
+                        <li><a href="feedback.html">Обратная связь</a></li>
+                        <li><a href="changelog.html">История обновлений</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 AniMangaHub. Все права защищены.
+                <br>
+                <small style="color: #64748b;">Профиль пользователя: AnimeFan2023</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Profile page specific JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load user data
+            loadUserData();
+            
+            // Initialize search
+            const searchInput = document.getElementById('profileSearch');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        searchProfile(this.value);
+                    }
+                });
+            }
+            
+            // Load activity
+            loadActivity('all');
+        });
+        
+        function loadUserData() {
+            const user = localStorage.getItem('currentUser');
+            if (user) {
+                const userData = JSON.parse(user);
+                document.querySelector('.profile-name h1').textContent = userData.username || 'AnimeFan2023';
+                
+                // Update avatar in header
+                const avatar = document.querySelector('.avatar');
+                if (avatar) {
+                    avatar.innerHTML = userData.username ? userData.username.charAt(0).toUpperCase() : 'A';
+                }
+                
+                // Update large avatar
+                const profileAvatar = document.getElementById('profileAvatar');
+                if (profileAvatar) {
+                    profileAvatar.innerHTML = userData.username ? userData.username.charAt(0).toUpperCase() : 'A';
+                }
+            }
+        }
+        
+        function searchProfile(query) {
+            if (!query.trim()) return;
+            alert(`Поиск в профиле: ${query}`);
+            // In real implementation: search within user's content
+        }
+        
+        function switchTab(tabName) {
+            // Update active tab button
+            document.querySelectorAll('.profile-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update sidebar active link
+            document.querySelectorAll('.sidebar-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show corresponding tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Load data for the tab if needed
+            if (tabName === 'activity') {
+                loadActivity('all');
+            } else if (tabName === 'collections') {
+                loadUserCollections();
+            }
+        }
+        
+        function editProfile() {
+            // Switch to settings tab and scroll to top
+            switchTab('settings');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function loadActivity(filter) {
+            const activityList = document.getElementById('activityList');
+            if (!activityList) return;
+            
+            // Simulate loading activity
+            const activities = [
+                {
+                    icon: 'fa-tv',
+                    text: 'Начал смотреть <strong>Магическая битва 2</strong> - Эпизод 12',
+                    time: '2 часа назад',
+                    type: 'anime'
+                },
+                {
+                    icon: 'fa-book',
+                    text: 'Прочитал <strong>Берсерк</strong> - Глава 374',
+                    time: '5 часов назад',
+                    type: 'manga'
+                },
+                {
+                    icon: 'fa-comment',
+                    text: 'Оставил комментарий в теме <strong>"Обсуждение Атаки титанов"</strong>',
+                    time: 'Вчера, 14:30',
+                    type: 'forum'
+                },
+                {
+                    icon: 'fa-heart',
+                    text: 'Добавил <strong>Человека-бензопилу</strong> в коллекцию "Лучшее"',
+                    time: '2 дня назад',
+                    type: 'collections'
+                },
+                {
+                    icon: 'fa-star',
+                    text: 'Поставил оценку 9.8 <strong>Атаке титанов</strong>',
+                    time: '3 дня назад',
+                    type: 'anime'
+                }
+            ];
+            
+            activityList.innerHTML = '';
+            
+            const filteredActivities = filter === 'all' 
+                ? activities 
+                : activities.filter(a => a.type === filter);
+            
+            filteredActivities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = 'activity-item';
+                activityItem.innerHTML = `
+                    <div class="activity-icon">
+                        <i class="fas ${activity.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-text">${activity.text}</div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                `;
+                activityList.appendChild(activityItem);
+            });
+            
+            if (filteredActivities.length === 0) {
+                activityList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #94a3b8;">
+                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <h3 style="color: white; margin-bottom: 10px;">Активности нет</h3>
+                        <p>Начните смотреть аниме, читать мангу или общаться на форуме</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function filterActivity(type) {
+            loadActivity(type);
+        }
+        
+        function loadUserCollections() {
+            const collectionsGrid = document.querySelector('#collectionsTab .collections-grid');
+            if (!collectionsGrid) return;
+            
+            // In real implementation: load user's collections from server
+            // For now, show empty state
+        }
+        
+        function addFriend() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) {
+                alert('Пожалуйста, войдите в систему, чтобы добавлять друзей');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            alert('Функция добавления друзей в разработке');
+        }
+        
+        function selectAvatar(letter) {
+            // Update selected avatar
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            // Update avatar display
+            document.getElementById('profileAvatar').innerHTML = letter;
+            
+            // In real implementation: save avatar choice
+        }
+        
+        function saveSettings() {
+            alert('Настройки сохранены');
+            // In real implementation: send settings to server
+        }
+        
+        function resetSettings() {
+            if (confirm('Сбросить все настройки к значениям по умолчанию?')) {
+                document.getElementById('settingsForm').reset();
+                alert('Настройки сброшены');
+            }
+        }
+        
+        function logout() {
+            if (confirm('Вы уверены, что хотите выйти?')) {
+                localStorage.removeItem('currentUser');
+                sessionStorage.removeItem('rememberedUser');
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // Modal functions (from collections page)
+        function openCreateModal() {
+            const user = localStorage.getItem('currentUser');
+            if (!user) {
+                alert('Пожалуйста, войдите в систему, чтобы создавать коллекции');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            alert('Модальное окно создания коллекции (реализация в collections.html)');
+            // In real implementation: show modal
+        }
+    </script>
+</body>
+</html>

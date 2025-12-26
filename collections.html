@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Коллекции - Shikimori Lists - AniMangaHub</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Shikimori тема для коллекций */
+        :root {
+            --shikimori-pink: #ec4899;
+            --shikimori-pink-dark: #db2777;
+            --shikimori-purple: #8b5cf6;
+        }
+
+        .shikimori-theme .btn-primary {
+            background-color: var(--shikimori-pink);
+            border-color: var(--shikimori-pink);
+        }
+
+        .shikimori-theme .btn-primary:hover {
+            background-color: var(--shikimori-pink-dark);
+            border-color: var(--shikimori-pink-dark);
+        }
+
+        .shikimori-theme .collection-tab.active::after {
+            background-color: var(--shikimori-pink);
+        }
+
+        .shikimori-badge {
+            background-color: var(--shikimori-pink);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .shikimori-list-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .list-stat-card {
+            background-color: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #334155;
+            flex: 1;
+            min-width: 150px;
+            transition: all 0.3s;
+        }
+
+        .list-stat-card:hover {
+            border-color: var(--shikimori-pink);
+            transform: translateY(-3px);
+        }
+
+        .list-stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--shikimori-pink);
+            margin-bottom: 5px;
+        }
+
+        .list-stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .shikimori-list-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            background-color: #1e293b;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .shikimori-list-item:hover {
+            border-color: var(--shikimori-pink);
+            transform: translateY(-3px);
+        }
+
+        .list-item-poster {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .list-item-content {
+            flex: 1;
+        }
+
+        .list-item-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .list-item-meta {
+            display: flex;
+            gap: 15px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .list-item-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-watching {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .status-planned {
+            background-color: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+        }
+
+        .status-completed {
+            background-color: rgba(236, 72, 153, 0.2);
+            color: #ec4899;
+        }
+
+        .status-dropped {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .list-item-progress {
+            margin-top: 15px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background-color: #0f172a;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--shikimori-pink) 0%, var(--shikimori-purple) 100%);
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .shikimori-auth-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid #334155;
+            margin-bottom: 30px;
+        }
+
+        .shikimori-auth-icon {
+            font-size: 4rem;
+            color: var(--shikimori-pink);
+            margin-bottom: 20px;
+        }
+
+        .user-profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #1e293b;
+            border-radius: 10px;
+            border: 1px solid #334155;
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--shikimori-pink);
+        }
+
+        .user-info h2 {
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .user-info p {
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .user-stat {
+            text-align: center;
+        }
+
+        .user-stat-value {
+            font-weight: bold;
+            color: var(--shikimori-pink);
+            font-size: 1.2rem;
+        }
+
+        .user-stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .list-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--shikimori-pink);
+            color: white;
+        }
+
+        .filter-btn.active {
+            background-color: var(--shikimori-pink);
+            border-color: var(--shikimori-pink);
+            color: white;
+        }
+
+        .empty-list {
+            text-align: center;
+            padding: 60px 20px;
+            color: #94a3b8;
+        }
+
+        .empty-list-icon {
+            font-size: 4rem;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+
+        .list-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: auto;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            background: none;
+            border: 1px solid #334155;
+            color: #94a3b8;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            border-color: var(--shikimori-pink);
+            color: var(--shikimori-pink);
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 2px;
+            margin-top: 10px;
+        }
+
+        .star {
+            color: #f59e0b;
+            font-size: 0.9rem;
+        }
+
+        .star.empty {
+            color: #334155;
+        }
+    </style>
+</head>
+<body class="shikimori-theme">
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-play-circle"></i>
+                    <span>AniMangaHub</span>
+                    <span class="shikimori-badge">Shikimori</span>
+                </a>
+                
+                <nav class="nav-links">
+                    <a href="index.html"><i class="fas fa-home"></i> Главная</a>
+                    <a href="anime.html"><i class="fas fa-tv"></i> Аниме</a>
+                    <a href="manga.html"><i class="fas fa-book"></i> Манга</a>
+                    <a href="ranobe.html"><i class="fas fa-book-open"></i> Ранобэ</a>
+                    <a href="forum.html"><i class="fas fa-comments"></i> Форум</a>
+                    <a href="calendar.html"><i class="fas fa-calendar-alt"></i> Календарь</a>
+                    <a href="collections.html" class="active"><i class="fas fa-heart"></i> Коллекции</a>
+                </nav>
+                
+                <div class="user-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Поиск в коллекциях..." id="collectionsSearch">
+                    </div>
+                    
+                    <a href="notifications.html" class="notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="shikimoriNotifications">0</span>
+                    </a>
+                    
+                    <div id="shikimoriAuthButton"></div>
+                    
+                    <a href="profile.html" class="avatar" id="shikimoriAvatar">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-user-circle"></i> Мой профиль Shikimori</h3>
+                    <div id="shikimoriUserInfo">
+                        <!-- User info will be loaded here -->
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-primary" style="width: 100%;" onclick="shikimoriLogin()" id="loginButton">
+                            <i class="fas fa-sign-in-alt"></i> Войти через Shikimori
+                        </button>
+                        <button class="btn btn-outline" style="width: 100%; margin-top: 10px; display: none;" 
+                                onclick="shikimoriLogout()" id="logoutButton">
+                            <i class="fas fa-sign-out-alt"></i> Выйти
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-filter"></i> Фильтры списка</h3>
+                    <div class="filter-options" style="display: flex; flex-direction: column; gap: 10px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="list-filter" value="all" checked onchange="filterList()">
+                            <span>Все аниме</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="list-filter" value="watching" onchange="filterList()">
+                            <span>Смотрю</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="list-filter" value="planned" onchange="filterList()">
+                            <span>В планах</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="list-filter" value="completed" onchange="filterList()">
+                            <span>Просмотрено</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="radio" name="list-filter" value="dropped" onchange="filterList()">
+                            <span>Брошено</span>
+                        </label>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <label style="color: #cbd5e1; margin-bottom: 10px; display: block;">Сортировка</label>
+                        <select class="filter-select" style="width: 100%;" onchange="sortList(this.value)">
+                            <option value="updated">По дате обновления</option>
+                            <option value="title">По названию</option>
+                            <option value="score">По оценке</option>
+                            <option value="episodes">По эпизодам</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-chart-bar"></i> Статистика</h3>
+                    <div id="listStats">
+                        <!-- Stats will be loaded here -->
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3><i class="fas fa-star"></i> Избранное</h3>
+                    <div id="favoritesList">
+                        <!-- Favorites will be loaded here -->
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Authentication Section -->
+                <div id="authSection" style="display: none;">
+                    <section class="shikimori-auth-section">
+                        <div class="shikimori-auth-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h2 style="color: white; margin-bottom: 10px;">Ваши коллекции Shikimori</h2>
+                        <p style="color: #94a3b8; margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                            Войдите через Shikimori.one, чтобы синхронизировать ваши списки аниме, оценки и заметки. 
+                            Получите доступ к вашим коллекциям с любого устройства.
+                        </p>
+                        <button class="btn btn-primary" onclick="shikimoriLogin()">
+                            <i class="fas fa-sign-in-alt"></i> Войти через Shikimori
+                        </button>
+                        <p style="color: #64748b; margin-top: 15px; font-size: 0.9rem;">
+                            <i class="fas fa-info-circle"></i> Ваши данные синхронизируются с Shikimori.one
+                        </p>
+                    </section>
+                </div>
+                
+                <!-- User Profile -->
+                <div id="userProfile" style="display: none;">
+                    <div class="user-profile-header">
+                        <img id="userAvatar" src="" alt="Avatar" class="user-avatar">
+                        <div class="user-info">
+                            <h2 id="userName">Пользователь</h2>
+                            <p id="userStatus">Статус не указан</p>
+                            <div class="user-stats">
+                                <div class="user-stat">
+                                    <div class="user-stat-value" id="statWatching">0</div>
+                                    <div class="user-stat-label">Смотрю</div>
+                                </div>
+                                <div class="user-stat">
+                                    <div class="user-stat-value" id="statCompleted">0</div>
+                                    <div class="user-stat-label">Просмотрено</div>
+                                </div>
+                                <div class="user-stat">
+                                    <div class="user-stat-value" id="statPlanned">0</div>
+                                    <div class="user-stat-label">В планах</div>
+                                </div>
+                                <div class="user-stat">
+                                    <div class="user-stat-value" id="statDays">0</div>
+                                    <div class="user-stat-label">Дней</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- List Content -->
+                <div id="listContent" style="display: none;">
+                    <!-- List Header -->
+                    <div class="collections-header">
+                        <div>
+                            <h1 style="color: white; margin-bottom: 10px;">
+                                <i class="fas fa-list" style="color: var(--shikimori-pink);"></i> Мой список аниме
+                            </h1>
+                            <p style="color: #94a3b8;">
+                                Синхронизировано с вашим аккаунтом Shikimori
+                                <span id="listCount" style="color: var(--shikimori-pink); margin-left: 10px;"></span>
+                            </p>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px;">
+                            <button class="btn btn-primary" onclick="refreshList()">
+                                <i class="fas fa-sync-alt"></i> Обновить
+                            </button>
+                            <button class="btn btn-outline" onclick="exportList()">
+                                <i class="fas fa-download"></i> Экспорт
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- List Stats -->
+                    <div class="shikimori-list-stats" id="detailedStats">
+                        <!-- Detailed stats will be loaded here -->
+                    </div>
+                    
+                    <!-- List Filters -->
+                    <div class="list-filters">
+                        <button class="filter-btn active" onclick="setFilter('all')">Все</button>
+                        <button class="filter-btn" onclick="setFilter('watching')">Смотрю</button>
+                        <button class="filter-btn" onclick="setFilter('planned')">В планах</button>
+                        <button class="filter-btn" onclick="setFilter('completed')">Просмотрено</button>
+                        <button class="filter-btn" onclick="setFilter('dropped')">Брошено</button>
+                        <button class="filter-btn" onclick="setFilter('rewatching')">Пересматриваю</button>
+                    </div>
+                    
+                    <!-- Anime List -->
+                    <div id="animeListContainer">
+                        <!-- Anime list will be loaded here -->
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination" style="display: none;">
+                        <a href="#" onclick="prevPage()">&laquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#" onclick="nextPage()">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Anime Detail Modal -->
+    <div class="modal" id="animeDetailModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Детали аниме</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Anime details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Entry Modal -->
+    <div class="modal" id="editEntryModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Редактировать запись</h3>
+                <button class="close-modal" onclick="closeEditModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="editModalBody">
+                <!-- Edit form will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>AniMangaHub × Shikimori</h3>
+                    <p>Синхронизация ваших списков аниме с Shikimori.one</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="https://shikimori.one" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Shikimori
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Мои списки</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="setFilter('watching')">Смотрю</a></li>
+                        <li><a href="#" onclick="setFilter('planned')">В планах</a></li>
+                        <li><a href="#" onclick="setFilter('completed')">Просмотрено</a></li>
+                        <li><a href="#" onclick="setFilter('dropped')">Брошено</a></li>
+                        <li><a href="#" onclick="setFilter('rewatching')">Пересматриваю</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Shikimori API</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://shikimori.one/api/doc/2.0/user_rates" target="_blank">User Rates API</a></li>
+                        <li><a href="https://shikimori.one/api/doc/2.0/animes" target="_blank">Anime API</a></li>
+                        <li><a href="https://shikimori.one/api/doc/2.0/users" target="_blank">Users API</a></li>
+                        <li><a href="https://shikimori.one/forum" target="_blank">Форум</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Экспорт</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="exportJSON()">Экспорт в JSON</a></li>
+                        <li><a href="#" onclick="exportCSV()">Экспорт в CSV</a></li>
+                        <li><a href="#" onclick="exportXML()">Экспорт в XML</a></li>
+                        <li><a href="#" onclick="printList()">Печать списка</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 AniMangaHub. Использует Shikimori.one API для синхронизации списков.
+                <br>
+                <small style="color: #64748b;">
+                    Ваши списки аниме синхронизируются с вашим аккаунтом Shikimori.
+                </small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/shikimori-api.js"></script>
+    <script>
+        // Collections with Shikimori API
+        let userAnimeList = [];
+        let currentFilter = 'all';
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update auth UI
+            updateAuthUI();
+            
+            // Set up search
+            setupSearch();
+        });
+
+        function updateAuthUI() {
+            const isAuthenticated = shikimoriAPI.isAuthenticated();
+            const authSection = document.getElementById('authSection');
+            const listContent = document.getElementById('listContent');
+            const userProfile = document.getElementById('userProfile');
+            const loginButton = document.getElementById('loginButton');
+            const logoutButton = document.getElementById('logoutButton');
+            const authButtonContainer = document.getElementById('shikimoriAuthButton');
+            const userInfoContainer = document.getElementById('shikimoriUserInfo');
+            
+            if (isAuthenticated) {
+                authSection.style.display = 'none';
+                listContent.style.display = 'block';
+                userProfile.style.display = 'block';
+                loginButton.style.display = 'none';
+                logoutButton.style.display = 'block';
+                
+                // Load user data
+                loadUserData();
+                loadUserAnimeList();
+                
+            } else {
+                authSection.style.display = 'block';
+                listContent.style.display = 'none';
+                userProfile.style.display = 'none';
+                loginButton.style.display = 'block';
+                logoutButton.style.display = 'none';
+                userInfoContainer.innerHTML = '';
+            }
+        }
+
+        function shikimoriLogin() {
+            // Демо-авторизация (в реальном приложении - OAuth)
+            const testUser = {
+                id: 12345,
+                nickname: 'AnimeLover',
+                avatar: 'https://via.placeholder.com/150',
+                level: 42,
+                status: 'Любитель аниме с 2015 года'
+            };
+            
+            localStorage.setItem('shikimori_token', 'test_token_456');
+            localStorage.setItem('shikimori_user_id', testUser.id);
+            localStorage.setItem('shikimori_user', JSON.stringify(testUser));
+            
+            shikimoriAPI.accessToken = 'test_token_456';
+            shikimoriAPI.userId = testUser.id;
+            
+            updateAuthUI();
+            alert('Демо-авторизация успешна! В реальном приложении будет использоваться OAuth Shikimori.');
+        }
+
+        function shikimoriLogout() {
+            shikimoriAPI.logout();
+            updateAuthUI();
+            alert('Вы вышли из системы');
+        }
+
+        async function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('shikimori_user') || '{}');
+            
+            // Update profile header
+            document.getElementById('userAvatar').src = userData.avatar || 'https://via.placeholder.com/100';
+            document.getElementById('userName').textContent = userData.nickname || 'Пользователь';
+            document.getElementById('userStatus').textContent = userData.status || 'Статус не указан';
+            
+            // Update user info in sidebar
+            const userInfoContainer = document.getElementById('shikimoriUserInfo');
+            userInfoContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <img src="${userData.avatar || 'https://via.placeholder.com/50'}" 
+                         alt="${userData.nickname}"
+                         style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+                    <div>
+                        <div style="color: white; font-weight: 500;">${userData.nickname}</div>
+                        <div style="color: #94a3b8; font-size: 0.85rem;">Уровень ${userData.level || 1}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Update avatar in header
+            const avatar = document.getElementById('shikimoriAvatar');
+            avatar.innerHTML = `<img src="${userData.avatar || '#'}" alt="${userData.nickname}" style="width: 100%; height: 100%; border-radius: 50%;">`;
+        }
+
+        async function loadUserAnimeList() {
+            const container = document.getElementById('animeListContainer');
+            const listCount = document.getElementById('listCount');
+            
+            container.innerHTML = `
+                <div class="shikimori-loading">
+                    <i class="fas fa-spinner"></i>
+                    <span>Загрузка вашего списка аниме...</span>
+                </div>
+            `;
+            
+            try {
+                userAnimeList = await shikimoriAPI.getUserAnimeList();
+                
+                // Update list count
+                listCount.textContent = `${userAnimeList.length} аниме`;
+                
+                // Calculate and display stats
+                calculateStats();
+                
+                // Display filtered list
+                filterList();
+                
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="empty-list">
+                        <div class="empty-list-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 style="color: white; margin-bottom: 10px;">Ошибка загрузки</h3>
+                        <p style="color: #94a3b8; margin-bottom: 20px;">
+                            Не удалось загрузить ваш список аниме
+                        </p>
+                        <button class="btn btn-primary" onclick="loadUserAnimeList()">
+                            <i class="fas fa-sync-alt"></i> Повторить
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function calculateStats() {
+            if (!userAnimeList || userAnimeList.length === 0) return;
+            
+            // Calculate basic stats
+            const stats = {
+                watching: 0,
+                completed: 0,
+                planned: 0,
+                dropped: 0,
+                rewatching: 0,
+                totalEpisodes: 0,
+                totalDays: 0,
+                averageScore: 0
+            };
+            
+            let totalScore = 0;
+            let scoredCount = 0;
+            
+            userAnimeList.forEach(item => {
+                stats[item.status] = (stats[item.status] || 0) + 1;
+                stats.totalEpisodes += item.episodes || 0;
+                
+                if (item.score) {
+                    totalScore += item.score;
+                    scoredCount++;
+                }
+                
+                // Calculate days (approx 24 minutes per episode)
+                if (item.anime && item.anime.episodes && item.episodes) {
+                    const watchedEpisodes = Math.min(item.episodes, item.anime.episodes);
+                    stats.totalDays += (watchedEpisodes * 24) / 60 / 24; // Convert to days
+                }
+            });
+            
+            stats.averageScore = scoredCount > 0 ? (totalScore / scoredCount).toFixed(1) : 0;
+            stats.totalDays = Math.round(stats.totalDays);
+            
+            // Update stats in header
+            document.getElementById('statWatching').textContent = stats.watching;
+            document.getElementById('statCompleted').textContent = stats.completed;
+            document.getElementById('statPlanned').textContent = stats.planned;
+            document.getElementById('statDays').textContent = stats.totalDays;
+            
+            // Update detailed stats
+            const detailedStats = document.getElementById('detailedStats');
+            detailedStats.innerHTML = `
+                <div class="list-stat-card">
+                    <div class="list-stat-value">${userAnimeList.length}</div>
+                    <div class="list-stat-label">Всего аниме</div>
+                </div>
+                <div class="list-stat-card">
+                    <div class="list-stat-value">${stats.totalEpisodes}</div>
+                    <div class="list-stat-label">Эпизодов</div>
+                </div>
+                <div class="list-stat-card">
+                    <div class="list-stat-value">${stats.totalDays}</div>
+                    <div class="list-stat-label">Дней просмотра</div>
+                </div>
+                <div class="list-stat-card">
+                    <div class="list-stat-value">${stats.averageScore}</div>
+                    <div class="list-stat-label">Средняя оценка</div>
+                </div>
+            `;
+            
+            // Update sidebar stats
+            const listStats = document.getElementById('listStats');
+            listStats.innerHTML = `
+                <div style="color: #94a3b8; font-size: 0.9rem;">
+                    <p><i class="fas fa-eye" style="color: #10b981;"></i> Смотрю: ${stats.watching}</p>
+                    <p><i class="fas fa-check-circle" style="color: var(--shikimori-pink);"></i> Просмотрено: ${stats.completed}</p>
+                    <p><i class="fas fa-clock" style="color: #6366f1;"></i> В планах: ${stats.planned}</p>
+                    <p><i class="fas fa-times-circle" style="color: #ef4444;"></i> Брошено: ${stats.dropped}</p>
+                </div>
+            `;
+            
+            // Load favorites
+            loadFavorites();
+        }
+
+        async function loadFavorites() {
+            const favoritesList = document.getElementById('favoritesList');
+            
+            try {
+                const favorites = await shikimoriAPI.getUserFavorites();
+                
+                if (favorites.animes && favorites.animes.length > 0) {
+                    favoritesList.innerHTML = '';
+                    
+                    favorites.animes.slice(0, 5).forEach(anime => {
+                        const item = document.createElement('a');
+                        item.href = '#';
+                        item.className = 'sidebar-links';
+                        item.style.display = 'block';
+                        item.style.padding = '8px 10px';
+                        item.style.borderRadius = '6px';
+                        item.style.marginBottom = '5px';
+                        item.style.color = '#cbd5e1';
+                        item.style.textDecoration = 'none';
+                        item.style.transition = 'all 0.3s';
+                        
+                        item.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <img src="${ShikimoriUtils.getPoster(anime, 'small')}" 
+                                     alt="${anime.russian || anime.name}"
+                                     style="width: 40px; height: 60px; object-fit: cover; border-radius: 4px;">
+                                <div>
+                                    <div style="color: white; font-weight: 500; font-size: 0.9rem;">
+                                        ${(anime.russian || anime.name).substring(0, 15)}${(anime.russian || anime.name).length > 15 ? '...' : ''}
+                                    </div>
+                                    <div style="color: #94a3b8; font-size: 0.8rem;">
+                                        <i class="fas fa-star" style="color: #f59e0b;"></i> ${anime.score || 'N/A'}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        item.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            showAnimeDetails(anime.id);
+                        });
+                        
+                        favoritesList.appendChild(item);
+                    });
+                } else {
+                    favoritesList.innerHTML = `
+                        <div style="color: #94a3b8; font-size: 0.9rem; text-align: center; padding: 10px;">
+                            Нет избранного
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                favoritesList.innerHTML = `
+                    <div style="color: #94a3b8; font-size: 0.9rem; text-align: center; padding: 10px;">
+                        Ошибка загрузки
+                    </div>
+                `;
+            }
+        }
+
+        function filterList() {
+            const filter = document.querySelector('input[name="list-filter"]:checked').value;
+            currentFilter = filter;
+            
+            displayAnimeList();
+        }
+
+        function setFilter(filter) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentFilter = filter;
+            currentPage = 1;
+            
+            displayAnimeList();
+        }
+
+        function sortList(method) {
+            // Sort the list
+            switch(method) {
+                case 'title':
+                    userAnimeList.sort((a, b) => {
+                        const titleA = (a.anime?.russian || a.anime?.name || '').toLowerCase();
+                        const titleB = (b.anime?.russian || b.anime?.name || '').toLowerCase();
+                        return titleA.localeCompare(titleB);
+                    });
+                    break;
+                case 'score':
+                    userAnimeList.sort((a, b) => (b.score || 0) - (a.score || 0));
+                    break;
+                case 'episodes':
+                    userAnimeList.sort((a, b) => (b.episodes || 0) - (a.episodes || 0));
+                    break;
+                case 'updated':
+                default:
+                    userAnimeList.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+                    break;
+            }
+            
+            displayAnimeList();
+        }
+
+        function displayAnimeList() {
+            const container = document.getElementById('animeListContainer');
+            const pagination = document.getElementById('pagination');
+            
+            if (!userAnimeList || userAnimeList.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-list">
+                        <div class="empty-list-icon">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <h3 style="color: white; margin-bottom: 10px;">Список пуст</h3>
+                        <p style="color: #94a3b8; margin-bottom: 20px;">
+                            Добавьте аниме в свой список на Shikimori
+                        </p>
+                        <button class="btn btn-primary" onclick="window.open('https://shikimori.one/animes', '_blank')">
+                            <i class="fas fa-search"></i> Найти аниме
+                        </button>
+                    </div>
+                `;
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            // Filter list
+            let filteredList = userAnimeList;
+            if (currentFilter !== 'all') {
+                filteredList = userAnimeList.filter(item => item.status === currentFilter);
+            }
+            
+            if (filteredList.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-list">
+                        <div class="empty-list-icon">
+                            <i class="fas fa-filter"></i>
+                        </div>
+                        <h3 style="color: white; margin-bottom: 10px;">Нет аниме</h3>
+                        <p style="color: #94a3b8;">
+                            Нет аниме со статусом "${getStatusText(currentFilter)}"
+                        </p>
+                    </div>
+                `;
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            // Calculate pagination
+            const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageItems = filteredList.slice(startIndex, endIndex);
+            
+            // Display items
+            container.innerHTML = '';
+            pageItems.forEach(item => {
+                const listItem = createListItem(item);
+                container.appendChild(listItem);
+            });
+            
+            // Display pagination if needed
+            if (totalPages > 1) {
+                pagination.style.display = 'flex';
+                updatePagination(totalPages);
+            } else {
+                pagination.style.display = 'none';
+            }
+        }
+
+        function createListItem(item) {
+            const anime = item.anime;
+            if (!anime) return document.createElement('div');
+            
+            const listItem = document.createElement('div');
+            listItem.className = 'shikimori-list-item';
+            
+            const statusClass = `status-${item.status}`;
+            const statusText = getStatusText(item.status);
+            const maxEpisodes = anime.episodes || '?';
+            const watchedEpisodes = item.episodes || 0;
+            const progressPercent = maxEpisodes === '?' ? 0 : (watchedEpisodes / maxEpisodes) * 100;
+            
+            // Format last updated date
+            const lastUpdated = item.updated_at ? 
+                new Date(item.updated_at).toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short'
+                }) : '';
+            
+            listItem.innerHTML = `
+                <img src="${ShikimoriUtils.getPoster(anime, 'medium')}" 
+                     alt="${anime.russian || anime.name}"
+                     class="list-item-poster">
+                
+                <div class="list-item-content">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <h3 class="list-item-title">${anime.russian || anime.name}</h3>
+                        <div class="list-actions">
+                            <button class="action-btn" onclick="editEntry(${item.id}, event)">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn" onclick="removeEntry(${item.id}, event)">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="list-item-meta">
+                        <span>${ShikimoriUtils.getTypeText(anime.kind)}</span>
+                        <span><i class="fas fa-star" style="color: #f59e0b;"></i> ${anime.score || 'N/A'}</span>
+                        <span class="list-item-status ${statusClass}">${statusText}</span>
+                        <span>Обновлено: ${lastUpdated}</span>
+                    </div>
+                    
+                    ${item.score ? `
+                        <div class="rating-stars">
+                            ${getStarsHTML(item.score)}
+                        </div>
+                    ` : ''}
+                    
+                    ${item.text ? `
+                        <div style="color: #94a3b8; font-size: 0.9rem; margin-top: 10px; font-style: italic;">
+                            "${item.text.substring(0, 100)}${item.text.length > 100 ? '...' : ''}"
+                        </div>
+                    ` : ''}
+                    
+                    <div class="list-item-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${progressPercent}%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>${watchedEpisodes} / ${maxEpisodes} эпизодов</span>
+                            <span>${item.score ? `Оценка: ${item.score}` : 'Без оценки'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add click event to show details
+            listItem.addEventListener('click', function(e) {
+                if (!e.target.closest('.list-actions')) {
+                    showAnimeDetails(anime.id);
+                }
+            });
+            
+            return listItem;
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'watching': 'Смотрю',
+                'planned': 'В планах',
+                'completed': 'Просмотрено',
+                'dropped': 'Брошено',
+                'rewatching': 'Пересматриваю'
+            };
+            
+            return statusMap[status] || status;
+        }
+
+        function getStarsHTML(score) {
+            const fullStars = Math.floor(score / 2);
+            const halfStar = score % 2 >= 1;
+            const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+            
+            let starsHTML = '';
+            
+            // Full stars
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star star"></i>';
+            }
+            
+            // Half star
+            if (halfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt star"></i>';
+            }
+            
+            // Empty stars
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star star empty"></i>';
+            }
+            
+            return starsHTML;
+        }
+
+        function updatePagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            
+            let paginationHTML = `
+                <a href="#" onclick="prevPage()">&laquo;</a>
+            `;
+            
+            for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+                const active = i === currentPage ? 'class="active"' : '';
+                paginationHTML += `<a href="#" ${active} onclick="goToPage(${i})">${i}</a>`;
+            }
+            
+            if (totalPages > 5) {
+                paginationHTML += `<span>...</span>`;
+            }
+            
+            paginationHTML += `
+                <a href="#" onclick="nextPage()">&raquo;</a>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        function goToPage(page) {
+            currentPage = page;
+            displayAnimeList();
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayAnimeList();
+            }
+        }
+
+        function nextPage() {
+            const filteredList = currentFilter === 'all' 
+                ? userAnimeList 
+                : userAnimeList.filter(item => item.status === currentFilter);
+            
+            const totalPages = Math.ceil(filteredList.length / itemsPerPage);
+            
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayAnimeList();
+            }
+        }
+
+        async function showAnimeDetails(animeId) {
+            const modal = document.getElementById('animeDetailModal');
+            const title = document.getElementById('modalTitle');
+            const body = document.getElementById('modalBody');
+            
+            modal.style.display = 'flex';
+            body.innerHTML = `
+                <div class="shikimori-loading">
+                    <i class="fas fa-spinner"></i>
+                    <span>Загрузка информации...</span>
+                </div>
+            `;
+            
+            try {
+                const anime = await shikimoriAPI.getAnimeById(animeId);
+                
+                title.textContent = anime.russian || anime.name;
+                
+                // Find user's entry for this anime
+                const userEntry = userAnimeList.find(item => item.anime?.id === animeId);
+                
+                body.innerHTML = `
+                    <div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+                        <img src="${ShikimoriUtils.getPoster(anime, 'large')}" 
+                             alt="${anime.russian || anime.name}"
+                             style="width: 200px; height: 300px; object-fit: cover; border-radius: 8px;">
+                        
+                        <div style="flex: 1; min-width: 300px;">
+                            <h4 style="color: white; margin-bottom: 10px;">${anime.russian || anime.name}</h4>
+                            <div style="color: #94a3b8; margin-bottom: 15px;">${anime.japanese || ''}</div>
+                            
+                            <div style="display: flex; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">
+                                <div style="background-color: var(--shikimori-pink); color: white; padding: 5px 10px; border-radius: 4px;">
+                                    ${ShikimoriUtils.getTypeText(anime.kind)}
+                                </div>
+                                <div style="color: #94a3b8;">
+                                    <i class="fas fa-star" style="color: #f59e0b;"></i> ${anime.score || 'N/A'}
+                                </div>
+                                <div style="color: #94a3b8;">
+                                    <i class="fas fa-play-circle"></i> ${anime.episodes || '?'} эпизодов
+                                </div>
+                                <div style="color: ${ShikimoriUtils.getStatusColor(anime.status)};">
+                                    ${ShikimoriUtils.getStatusText(anime.status)}
+                                </div>
+                            </div>
+                            
+                            ${userEntry ? `
+                                <div style="background-color: #0f172a; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                                    <div style="color: white; margin-bottom: 10px;">Ваша запись:</div>
+                                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                                        <div>
+                                            <div style="color: #94a3b8; font-size: 0.9rem;">Статус</div>
+                                            <div class="list-item-status status-${userEntry.status}" style="margin-top: 5px;">
+                                                ${getStatusText(userEntry.status)}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div style="color: #94a3b8; font-size: 0.9rem;">Эпизоды</div>
+                                            <div style="color: white; margin-top: 5px;">
+                                                ${userEntry.episodes || 0} / ${anime.episodes || '?'}
+                                            </div>
+                                        </div>
+                                        ${userEntry.score ? `
+                                            <div>
+                                                <div style="color: #94a3b8; font-size: 0.9rem;">Оценка</div>
+                                                <div style="color: white; margin-top: 5px;">
+                                                    ${userEntry.score} ★
+                                                </div>
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    ${userEntry.text ? `
+                                        <div style="color: #94a3b8; margin-top: 10px; font-style: italic; border-top: 1px solid #334155; padding-top: 10px;">
+                                            "${userEntry.text}"
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            ` : ''}
+                            
+                            <div style="margin-bottom: 15px;">
+                                <div style="color: white; margin-bottom: 5px;">Жанры:</div>
+                                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                    ${(anime.genres || []).map(genre => `
+                                        <span class="tag">${genre.russian || genre.name}</span>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <div style="color: white; margin-bottom: 10px;">Описание:</div>
+                        <div style="color: #94a3b8; line-height: 1.6;">${anime.description || 'Описание отсутствует'}</div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        ${!userEntry ? `
+                            <button class="btn btn-primary" onclick="addToMyList(${anime.id})">
+                                <i class="fas fa-plus"></i> Добавить в мой список
+                            </button>
+                        ` : `
+                            <button class="btn btn-primary" onclick="editEntry(${userEntry.id})">
+                                <i class="fas fa-edit"></i> Редактировать запись
+                            </button>
+                        `}
+                        <button class="btn btn-outline" onclick="window.open('https://shikimori.one${anime.url}', '_blank')">
+                            <i class="fas fa-external-link-alt"></i> Открыть на Shikimori
+                        </button>
+                    </div>
+                `;
+                
+            } catch (error) {
+                body.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #ef4444; margin-bottom: 20px;"></i>
+                        <h3 style="color: white; margin-bottom: 10px;">Ошибка загрузки</h3>
+                        <p style="color: #94a3b8;">Не удалось загрузить информацию об аниме</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function addToMyList(animeId) {
+            if (!shikimoriAPI.isAuthenticated()) {
+                alert('Пожалуйста, войдите в систему');
+                return;
+            }
+            
+            try {
+                await shikimoriAPI.addToUserList(animeId, 'planned');
+                alert('Аниме добавлено в ваш список!');
+                loadUserAnimeList(); // Reload list
+                closeModal();
+            } catch (error) {
+                alert('Ошибка: ' + error.message);
+            }
+        }
+
+        async function editEntry(entryId, event) {
+            if (event) event.stopPropagation();
+            
+            const modal = document.getElementById('editEntryModal');
+            const body = document.getElementById('editModalBody');
+            
+            modal.style.display = 'flex';
+            
+            // Find the entry
+            const entry = userAnimeList.find(item => item.id === entryId);
+            if (!entry) {
+                body.innerHTML = '<p style="color: #94a3b8;">Запись не найдена</p>';
+                return;
+            }
+            
+            const anime = entry.anime;
+            const maxEpisodes = anime?.episodes || 999;
+            
+            body.innerHTML = `
+                <h4 style="color: white; margin-bottom: 20px;">${anime?.russian || anime?.name || 'Редактирование'}</h4>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div>
+                        <label style="color: white; display: block; margin-bottom: 5px;">Статус</label>
+                        <select id="editStatus" style="width: 100%; padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px;">
+                            <option value="watching" ${entry.status === 'watching' ? 'selected' : ''}>Смотрю</option>
+                            <option value="planned" ${entry.status === 'planned' ? 'selected' : ''}>В планах</option>
+                            <option value="completed" ${entry.status === 'completed' ? 'selected' : ''}>Просмотрено</option>
+                            <option value="dropped" ${entry.status === 'dropped' ? 'selected' : ''}>Брошено</option>
+                            <option value="rewatching" ${entry.status === 'rewatching' ? 'selected' : ''}>Пересматриваю</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="color: white; display: block; margin-bottom: 5px;">
+                            Эпизоды (0-${maxEpisodes})
+                        </label>
+                        <input type="number" id="editEpisodes" 
+                               min="0" max="${maxEpisodes}"
+                               value="${entry.episodes || 0}"
+                               style="width: 100%; padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px;">
+                    </div>
+                    
+                    <div>
+                        <label style="color: white; display: block; margin-bottom: 5px;">
+                            Оценка (1-10)
+                        </label>
+                        <input type="number" id="editScore" 
+                               min="1" max="10"
+                               value="${entry.score || ''}"
+                               placeholder="Без оценки"
+                               style="width: 100%; padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px;">
+                    </div>
+                    
+                    <div>
+                        <label style="color: white; display: block; margin-bottom: 5px;">Заметки</label>
+                        <textarea id="editText" 
+                                  placeholder="Ваши заметки об этом аниме..."
+                                  style="width: 100%; padding: 10px; background-color: #0f172a; border: 1px solid #334155; color: white; border-radius: 6px; min-height: 100px; resize: vertical;">${entry.text || ''}</textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button class="btn btn-primary" style="flex: 1;" onclick="saveEntry(${entryId})">
+                            <i class="fas fa-save"></i> Сохранить
+                        </button>
+                        <button class="btn btn-outline" style="flex: 1;" onclick="closeEditModal()">
+                            Отмена
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        async function saveEntry(entryId) {
+            try {
+                const updates = {
+                    status: document.getElementById('editStatus').value,
+                    episodes: parseInt(document.getElementById('editEpisodes').value) || 0,
+                    text: document.getElementById('editText').value
+                };
+                
+                const score = document.getElementById('editScore').value;
+                if (score && score >= 1 && score <= 10) {
+                    updates.score = parseInt(score);
+                }
+                
+                await shikimoriAPI.updateUserList(entryId, updates);
+                
+                alert('Изменения сохранены!');
+                closeEditModal();
+                loadUserAnimeList(); // Reload list
+                
+            } catch (error) {
+                alert('Ошибка сохранения: ' + error.message);
+            }
+        }
+
+        async function removeEntry(entryId, event) {
+            if (event) event.stopPropagation();
+            
+            if (!confirm('Вы уверены, что хотите удалить эту запись из вашего списка?')) {
+                return;
+            }
+            
+            try {
+                await shikimoriAPI.removeFromUserList(entryId);
+                alert('Запись удалена из вашего списка!');
+                loadUserAnimeList(); // Reload list
+            } catch (error) {
+                alert('Ошибка удаления: ' + error.message);
+            }
+        }
+
+        function refreshList() {
+            loadUserAnimeList();
+        }
+
+        function exportList() {
+            // Create export data
+            const exportData = userAnimeList.map(item => ({
+                title: item.anime?.russian || item.anime?.name,
+                status: getStatusText(item.status),
+                episodes: `${item.episodes || 0}/${item.anime?.episodes || '?'}`,
+                score: item.score || 'Без оценки',
+                notes: item.text || ''
+            }));
+            
+            // Convert to JSON
+            const jsonData = JSON.stringify(exportData, null, 2);
+            
+            // Create download link
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `shikimori-list-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Список экспортирован в JSON файл!');
+        }
+
+        function exportJSON() {
+            exportList();
+        }
+
+        function exportCSV() {
+            // Similar to exportList but in CSV format
+            alert('Экспорт в CSV в разработке');
+        }
+
+        function exportXML() {
+            alert('Экспорт в XML в разработке');
+        }
+
+        function printList() {
+            window.print();
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('collectionsSearch');
+            
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchInList(this.value);
+                }
+            });
+        }
+
+        function searchInList(query) {
+            if (!query.trim()) {
+                displayAnimeList();
+                return;
+            }
+            
+            const searchTerm = query.toLowerCase();
+            const filtered = userAnimeList.filter(item => {
+                const title = (item.anime?.russian || item.anime?.name || '').toLowerCase();
+                return title.includes(searchTerm);
+            });
+            
+            // Temporarily replace the list for display
+            const originalList = [...userAnimeList];
+            userAnimeList = filtered;
+            currentFilter = 'all';
+            currentPage = 1;
+            
+            displayAnimeList();
+            
+            // Restore original list
+            userAnimeList = originalList;
+        }
+
+        function closeModal() {
+            document.getElementById('animeDetailModal').style.display = 'none';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editEntryModal').style.display = 'none';
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('animeDetailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        document.getElementById('editEntryModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+    </script>
+</body>
+</html>
